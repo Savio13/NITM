@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String    @id @default(uuid())
+  name           String
+  email          String    @unique
+  phone          String?
+  role           Role
+  departmentId   String?   @map("department_id")
+  profilePhoto   String?   @map("profile_photo_url")
+  passwordHash   String
+  status         String    @default("active")
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+enum Role {
+  STUDENT
+  FACULTY
+  CANTEEN
+  HOUSEKEEPING
+  DRIVER
+  HOD
+  ADMIN
+}
+
+model Department {
+  id        String @id @default(uuid())
+  name      String
+  hodUserId String?
+}
+
+model Notice {
+  id          String   @id @default(uuid())
+  title       String
+  body        String
+  postedById  String
+  visibility  String
+  attachments String[] @default([])
+  createdAt   DateTime @default(now())
+  expiresAt   DateTime?
+}
+
+model Booking {
+  id           String   @id @default(uuid())
+  type         String
+  userId       String
+  departmentId String?
+  itemId       String?
+  startAt      DateTime?
+  endAt        DateTime?
+  details      Json?
+  status       String
+  approvedBy   String?
+  approvalNotes String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Notification {
+  id         String   @id @default(uuid())
+  toUserId   String?
+  role       Role?
+  departmentId String?
+  title      String
+  body       String
+  data       Json?
+  deliveredAt DateTime?
+  readAt     DateTime?
+  createdAt  DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  actorId   String
+  action    String
+  metadata  Json?
+  ip        String?
+  createdAt DateTime @default(now())
+}
