@@ -14,3 +14,21 @@ Next steps:
 4. Open `admin/` and `mobile/` directories for further work.
 
 If you want, I can initialize Git, run the first install commands, or implement the authentication flow next.
+
+Docker (no local Node/npm required)
+----------------------------------
+If you cannot or don't want to install Node.js locally, use Docker Compose to run Postgres + backend locally.
+
+From the repository root:
+
+```powershell
+docker compose up --build
+```
+
+The backend will be available at `http://localhost:4000` and the Postgres DB at port `5432`.
+
+To stop and remove containers:
+
+```powershell
+docker compose down
+```

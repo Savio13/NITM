@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: nitm
+      POSTGRES_PASSWORD: nitm
+      POSTGRES_DB: nitm_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    ports:
+      - "4000:4000"
+    environment:
+      DATABASE_URL: "postgresql://nitm:nitm@db:5432/nitm_db"
+      JWT_SECRET: "dev_jwt_secret"
+      REFRESH_TOKEN_SECRET: "dev_refresh_secret"
+      ACCESS_TOKEN_EXP: "15m"
+      REFRESH_TOKEN_EXP: "7d"
+    depends_on:
+      - db
+
+volumes:
+  db-data:

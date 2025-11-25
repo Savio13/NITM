@@ -85,3 +85,13 @@ model AuditLog {
   ip        String?
   createdAt DateTime @default(now())
 }
+
+model RefreshToken {
+  id         String   @id @default(uuid())
+  tokenHash  String
+  userId     String
+  revoked    Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  expiresAt  DateTime?
+  @@index([userId])
+}
