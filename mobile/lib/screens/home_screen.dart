@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import 'notices_screen.dart';
+import 'room_booking_screen.dart';
+import 'vehicle_booking_screen.dart';
+import 'food_ordering_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -49,22 +52,22 @@ class HomeScreen extends StatelessWidget {
             _ActionCard(
               title: 'Book Room',
               icon: Icons.hotel,
-              onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Room booking coming soon')),
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const RoomBookingScreen()),
               ),
             ),
             _ActionCard(
               title: 'Order Food',
               icon: Icons.restaurant,
-              onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Food ordering coming soon')),
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const FoodOrderingScreen()),
               ),
             ),
             _ActionCard(
               title: 'Book Vehicle',
               icon: Icons.directions_car,
-              onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Vehicle booking coming soon')),
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const VehicleBookingScreen()),
               ),
             ),
             _ActionCard(
